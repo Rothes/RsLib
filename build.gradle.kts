@@ -50,7 +50,7 @@ subprojects {
                 create<MavenPublication>("maven") {
                     from(components["java"])
 
-                    artifact(project.tasks["kotlinSourcesJar"])
+//                    artifact(project.tasks["kotlinSourcesJar"])
 //                    artifact(project.tasks["shadowJar"])
 
                     artifactId = project.name

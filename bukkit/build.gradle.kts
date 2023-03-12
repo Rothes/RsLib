@@ -14,8 +14,9 @@ repositories {
 }
 
 dependencies {
-    compileOnlyApi("org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT")
-    compileOnlyApi("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
+//    compileOnlyApi("org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT")
+//    compileOnlyApi("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
+    compileOnlyApi(project(":bukkit:paper-wrapper"))
 
     api("org.bstats:bstats-bukkit:3.0.0")
     api("me.carleslc.Simple-YAML:Simple-Yaml:1.8.3")
