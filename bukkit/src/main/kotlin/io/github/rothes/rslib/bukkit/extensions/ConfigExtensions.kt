@@ -107,7 +107,7 @@ fun ConfigurationSection.getTypedMessageType(path: String): ComponentType? {
 }
 
 private val getSoundKeyLegacy: Method by lazy {
-    with (Class.forName(Bukkit.getServer().javaClass.`package`.name + "CraftSound").declaredMethods) {
+    with (Class.forName(Bukkit.getServer().javaClass.`package`.name + ".CraftSound").declaredMethods) {
         firstOrNull { it.name == "getSound" }
             ?: first { it.returnType == String::class.java }
     }
@@ -116,7 +116,7 @@ private val BukkitSound.adventureKey
     get() = if (VersionUtils.serverMajorVersion >= 16) {
         Key.key("minecraft", key.key)
     } else {
-        Key.key("minecraft", getSoundKeyLegacy.invoke(this) as String)
+        Key.key("minecraft", getSoundKeyLegacy.invoke(null, this) as String)
     }
 
 enum class MessageType(vararg val aliases: String) {
