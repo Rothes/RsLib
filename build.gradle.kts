@@ -12,7 +12,7 @@ allprojects {
     apply(plugin = "maven-publish")
 
     group = "io.github.rothes.rslib"
-    version = "0.1.0-SNAPSHOT"
+    version = "0.2.0-SNAPSHOT"
 
     repositories {
         mavenLocal()
@@ -50,7 +50,7 @@ subprojects {
                 create<MavenPublication>("maven") {
                     from(components["java"])
 
-//                    artifact(project.tasks["kotlinSourcesJar"])
+                    artifact(project.tasks["kotlinSourcesJar"])
 //                    artifact(project.tasks["shadowJar"])
 
                     artifactId = project.name
