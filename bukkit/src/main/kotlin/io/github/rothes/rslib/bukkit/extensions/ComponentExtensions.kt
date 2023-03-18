@@ -22,3 +22,8 @@ fun Component.replaceRaw(vararg replacements: String): Component {
     }
     return GsonComponentSerializer.gson().deserialize(raw)
 }
+
+fun String.replacep(search: String, replacement: String) = replace(search.placeholder, replacement)
+
+inline val String.placeholder: String
+    get() = "<\$$this>"

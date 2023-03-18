@@ -2,6 +2,7 @@ package io.github.rothes.rslib.bukkit.i18n
 
 import io.github.rothes.rslib.bukkit.RsLibPlugin
 import io.github.rothes.rslib.bukkit.exceptions.MissingInitialResourceException
+import io.github.rothes.rslib.bukkit.extensions.placeholder
 import io.github.rothes.rslib.bukkit.extensions.replace
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
@@ -39,27 +40,17 @@ open class I18n(private val plugin: RsLibPlugin) {
     fun getLocaled(key: String, prefixed: Boolean = false): Component = localedMessages[key]?.run {
         return if (prefixed) getLocaled("Sender.Prefix").append(this) else this
     } ?: Component.text("Missing localization key: $key").color(NamedTextColor.DARK_RED)
-//
-//    fun getLocaled(key: String, vararg replacements: String, prefixed: Boolean = false): Component = getLocaled(key).replaceText(
-//        TextReplacementConfig.builder().apply {
-//            if (replacements.size % 2 == 1)
-//                throw IllegalArgumentException("Replacements size is not even")
-//            val iterator = replacements.iterator()
-//            while (iterator.hasNext()) {
-//                this.matchLiteral(iterator.next())
-//                    .replacement(iterator.next())
-//            }
-//        }.build()
-//    ).run { return if (prefixed) getLocaled("Sender.Prefix").append(this) else this }
 
-    fun getLocaled(key: String, vararg replacements: String, prefixed: Boolean = false): Component = getLocaled(key).apply {
-            if (replacements.size % 2 == 1)
-                throw IllegalArgumentException("Replacements size is not even")
-            val iterator = replacements.iterator()
-            while (iterator.hasNext()) {
-                this.replace(iterator.next(), iterator.next())
-            }
-    }.run { return if (prefixed) getLocaled("Sender.Prefix").append(this) else this }
+    fun getLocaled(key: String, vararg replacements: String, prefixed: Boolean = false): Component = getLocaled(key).let {
+        var result = it
+        if (replacements.size % 2 == 1) throw IllegalArgumentException("Replacements size is not even")
+        val iterator = replacements.iterator()
+        while (iterator.hasNext()) {
+            result = result.replace(iterator.next().placeholder, iterator.next())
+        }
+
+        return if (prefixed) getLocaled("Sender.Prefix").append(result) else result
+    }
 
     fun getDefaultLocale(): YamlConfiguration = YamlConfiguration().apply {
             load(SupplierIO.Reader { getLocaledAsset("Locales/Locale.yml").reader(StandardCharsets.UTF_8) })
