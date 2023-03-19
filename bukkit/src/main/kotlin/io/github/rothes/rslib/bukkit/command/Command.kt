@@ -9,13 +9,13 @@ class Command(
     override val alias: Array<String> = emptyArray(),
     override val permission: String? = null,
     override val parent: ICommand? = null,
-    override val descriptionKey: String = "Commands" + StringBuilder().apply {
+    override val descriptionKey: String = StringBuilder("Commands.$name").apply {
         var cmd = parent
         while (cmd != null) {
             append('.').append(cmd!!.name)
             cmd = cmd!!.parent
         }
-    } + ".Description",
+    }.append(".Description").toString(),
 ) : ICommand {
 
     override val children: MutableList<ICommand> = mutableListOf()
