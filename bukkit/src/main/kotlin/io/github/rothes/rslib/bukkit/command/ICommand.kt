@@ -13,6 +13,8 @@ interface ICommand {
     val permission: String?
     val parent: ICommand?
 
+    fun childrenNames() = children.map { it.name.lowercase() }
+
     enum class Result {
         COMPLETED,
         UNKNOWN_COMMAND,

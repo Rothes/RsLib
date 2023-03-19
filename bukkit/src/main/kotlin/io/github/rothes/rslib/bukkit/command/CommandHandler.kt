@@ -34,8 +34,8 @@ open class CommandHandler(
     }
 
     override fun onTabComplete(sender: CommandSender, command: BukkitCmd, label: String, args: Array<String>): List<String>? {
-        if (args.size == 1) return commands.map { it.name }
-        return searchCommand(sender, args)?.let { it.tab(sender, args) }
+        if (args.size == 1) return commands.map { it.name.lowercase() }
+        return searchCommand(sender, args)?.let { cmd -> cmd.tab(sender, args).ifEmpty { cmd.childrenNames() } }
     }
 
     private fun searchCommand(sender: CommandSender, args: Array<String>): ICommand? {
