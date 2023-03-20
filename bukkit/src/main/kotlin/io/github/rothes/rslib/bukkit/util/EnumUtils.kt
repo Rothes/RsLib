@@ -1,5 +1,7 @@
 package io.github.rothes.rslib.bukkit.util
 
+import io.github.rothes.rslib.bukkit.LibObjects
+
 object EnumUtils {
 
     fun <T : Enum<T>> getEnum(
@@ -11,7 +13,7 @@ object EnumUtils {
             java.lang.Enum.valueOf(fallback.javaClass, value.uppercase())
         } catch (e: IllegalArgumentException) {
             msg?.let {
-                println(msg)
+                LibObjects.logger.severe(msg)
             }
             fallback
         }
@@ -25,7 +27,7 @@ object EnumUtils {
             java.lang.Enum.valueOf(T::class.java, value.uppercase())
         } catch (e: IllegalArgumentException) {
             msg?.let {
-                println(it.format(value))
+                LibObjects.logger.severe(it)
             }
             null
         }

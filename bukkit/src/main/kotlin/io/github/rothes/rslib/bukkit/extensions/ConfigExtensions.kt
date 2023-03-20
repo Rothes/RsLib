@@ -1,5 +1,6 @@
 package io.github.rothes.rslib.bukkit.extensions
 
+import io.github.rothes.rslib.bukkit.LibObjects
 import io.github.rothes.rslib.bukkit.config.ComponentType
 import io.github.rothes.rslib.bukkit.util.EnumUtils
 import io.github.rothes.rslib.bukkit.util.VersionUtils
@@ -68,12 +69,12 @@ fun ConfigurationSection.getTypedMessage(path: String): Component? {
                 try {
                     getComponent(this)
                 } catch (t: Throwable) {
-                    println("Failed to load $type message $this: $t")
+                    LibObjects.logger.severe("Failed to load $type message $this: $t")
                     return null
                 }
             }
         } ?: run {
-            println("Unknown message type $type.")
+            LibObjects.logger.severe("Unknown message type $type.")
             return null
         }
     }
@@ -93,12 +94,12 @@ fun ConfigurationSection.getTypedMessageType(path: String): ComponentType? {
                 try {
                     ComponentType(this@run, this)
                 } catch (t: Throwable) {
-                    println("Failed to load $type message $this: $t")
+                    LibObjects.logger.severe("Failed to load $type message $this: $t")
                     return null
                 }
             }
         } ?: run {
-            println("Unknown message type $type.")
+            LibObjects.logger.severe("Unknown message type $type.")
             return null
         }
     }
