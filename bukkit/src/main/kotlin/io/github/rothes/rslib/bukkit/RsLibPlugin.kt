@@ -32,6 +32,10 @@ abstract class RsLibPlugin : JavaPlugin() {
         }
     }
 
+    protected fun nameLibLogger() {
+        LibObjects.logger = LibObjects.NamedLogger(this.description.name + "-RsLib")
+    }
+
     override fun onEnable() {
         adventure = BukkitAudiences.create(this)
     }
